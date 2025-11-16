@@ -13,8 +13,12 @@ public class Show {
         this.listOfActors = new ArrayList<>();
     }
 
-    public void addActor(Actor actor) {
+    public boolean addActor(Actor actor) {
+        if (listOfActors.contains(actor)) {
+            return false;
+        }
         listOfActors.add(actor);
+        return true;
     }
 
     public boolean replaceActorBySurname(String surname, Actor newActor) {
@@ -26,8 +30,8 @@ public class Show {
         }
         return false;
     }
-
     public List<Actor> getListOfActors() {
+        //println списка актеров в методе printActors класса Theatre
         return new ArrayList<>(listOfActors);
     }
 
@@ -36,6 +40,7 @@ public class Show {
     }
 
     public Director getDirector() {
+        //println режисера в методе printDirector класса Theatre
         return this.director;
     }
 

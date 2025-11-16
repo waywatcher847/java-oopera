@@ -7,6 +7,7 @@ public class Theatre {
         Actor actor1 = new Actor("Алена", "Тестова", Gender.FEMALE, 168);
         Actor actor2 = new Actor("Алексей", "Тестин", Gender.MALE, 182);
         Actor actor3 = new Actor("Андрей", "Тестко", Gender.MALE, 175);
+        Actor actor4 = new Actor("Андрей", "Тестко", Gender.MALE, 175);
 
         Director dir1 = new Director("Дарья", "Тестицзе", Gender.FEMALE, 15);
         Director dir2 = new Director("Дмитрий", "Тестик", Gender.MALE, 9);
@@ -22,70 +23,93 @@ public class Theatre {
                 "Озеро в лесной чаще. Лебеди, выходя на берег, превращаются в девушек,...", choreographer);
 
         // Распределяем актёров по спектаклям
-        drama.addActor(actor1);
-        drama.addActor(actor2);
+        System.out.println("->Расспределение актеров");
+        addActor(drama, actor1);
+        addActor(drama, actor2);
 
-        opera.addActor(actor2);
-        opera.addActor(actor3);
+        addActor(opera, actor2);
+        addActor(opera, actor3);
 
-        ballet.addActor(actor1);
-        ballet.addActor(actor3);
+        addActor(ballet, actor1);
+        addActor(ballet, actor3);
+        addActor(ballet, actor4);
 
-        printActors("-драма", drama);
-        printActors("-опера", opera);
-        printActors("-балет", ballet);
+        // драма
+        System.out.println( );
+        System.out.println("->Директор драмы '" + drama.getTitle() + "'");
+        printDirector(drama);
+        System.out.println("->Актеры '" + drama.getTitle() + "':") ;
+        printActors(drama);
+
+        // опера
+        System.out.println( );
+        System.out.println("->либретто оперы:") ;
+        System.out.println(opera.getLibrettoText());
+        System.out.println("->Директор оперы '" + opera.getTitle() + "'");
+        printDirector(opera);
+        System.out.println("->Актеры '" + opera.getTitle() + "':") ;
+        printActors(opera);
+
+        // балет
+        System.out.println( );
+        System.out.println("->либретто балета:" );
+        System.out.println(ballet.getLibrettoText());
+        System.out.println("->Директор балета '" + ballet.getTitle() + "'");
+        printDirector(ballet);
+        System.out.println("->Актеры '" + ballet.getTitle() + "':") ;
+        printActors(ballet);
 
         // Заменяем актёра в одном из спектаклей
-        System.out.println("-заменить актёра в опере: Тестин на Тестова");
+        System.out.println( );
+        System.out.println("->заменить актёра в опере: Тестин на Тестова");
         replaceActor( opera, "Тестин", actor1 );
-
-        printActors("-опера после замены", opera );
+        printActors(opera);
 
         // Попытка заменить несуществующего актёра
-        System.out.println("-заменить несуществующего актёра в драме: 'Сидоров' на Тестко");
+        System.out.println( );
+        System.out.println("->заменить несуществующего актёра в драме: 'Сидоров' на Тестко");
         replaceActor( drama, "Сидоров" , actor3 );
 
-        // Выводим текст либретто для оперы и балета
-        System.out.println("-либретто оперы:") ;
-        System.out.println("   " + opera.getLibrettoText());
 
-        System.out.println("-либретто балета:" );
-        System.out.println("   " + ballet.getLibrettoText());
     }
 
-    private static void printActors(String label, Show show) {
-        System.out.println(label + " '" + show.getTitle() + "':") ;
+    private static void printActors(Show show) {
         List<Actor> actors = show.getListOfActors( );
         if (actors.isEmpty()) {
             System.out.println("нет актёров");
         } else {
             for (int i = 0; i < actors.size(); i++) {
-                System.out.println("   " + ( i + 1) + ". " + actors.get(i));
+                System.out.println(actors.get(i));
             }
         }
     }
 
     private static void replaceActor(Show show, String surname, Actor newActor) {
         if (show.checkExist(newActor)) {
-            System.out.println("   актёр " + newActor + " уже участвует в спектакле");
+            System.out.println("актёр " + newActor + " уже участвует в спектакле");
             return;
         }
 
         if (!show.checkUnique(surname)) {
-            System.out.println("   в спектакле несколько актеров с фамилией '" + surname + "'");
+            System.out.println("в спектакле несколько актеров с фамилией '" + surname + "'");
             return;
         }
 
         if (show.replaceActorBySurname(surname, newActor)) {
-            System.out.println("   успешно");
+            System.out.println("успешно");
         } else {
-            System.out.println("   в спектакле '" + show.getTitle() + "' нет актёра '" + surname + "'");
+            System.out.println("в спектакле '" + show.getTitle() + "' нет актёра '" + surname + "'");
         }
     }
 
     private static void printDirector(Show show) {
         Director director = show.getDirector( );
-        System.out.println("-Директор cпектакля '" + show.getTitle() + "'");
-        System.out.println("   " + director);
+        System.out.println(director);
+    }
+
+    private static void addActor(Show show, Actor actor) {
+       if (!show.addActor(actor)){
+           System.out.println("в '" + show.getTitle() + "' уже есть '" + actor + "'");
+       };
     }
 }
