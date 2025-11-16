@@ -31,15 +31,15 @@ public class Show {
         return new ArrayList<>(listOfActors);
     }
 
-    public String getLibrettoText() {
-        return null;
-    }
-
     public String getTitle() {
         return title;
     }
 
-    public boolean hasActor( Actor newActor ) {
+    public Director getDirector() {
+        return this.director;
+    }
+
+    public boolean checkExist( Actor newActor ) {
         List<Actor> actors = getListOfActors( );
         for (Actor actor : actors) {
             if (actor.getSurname().equals(newActor.surname)) {
@@ -47,5 +47,15 @@ public class Show {
             }
         }
         return false;
+    }
+
+    public boolean checkUnique( String surname ) {
+        int count = 0;
+        for (Actor actor : listOfActors) {
+            if (surname.equals(actor.getSurname())) {
+                count++;
+            }
+        }
+        return (count == 1 || count == 0);
     }
 }

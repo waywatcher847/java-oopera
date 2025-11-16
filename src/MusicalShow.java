@@ -9,7 +9,6 @@ public class MusicalShow extends Show {
         this.librettoText = librettoText;
     }
 
-    @Override
     public String getLibrettoText() {
         return librettoText;
     }

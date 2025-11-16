@@ -31,9 +31,9 @@ public class Theatre {
         ballet.addActor(actor1);
         ballet.addActor(actor3);
 
-        printActors("-драма 'На днe'", drama);
-        printActors("-опера 'Евгений Онегин'", opera);
-        printActors("-балет 'Ромео и Джульетта'", ballet);
+        printActors("-драма", drama);
+        printActors("-опера", opera);
+        printActors("-балет", ballet);
 
         // Заменяем актёра в одном из спектаклей
         System.out.println("-заменить актёра в опере: Тестин на Тестова");
@@ -54,7 +54,7 @@ public class Theatre {
     }
 
     private static void printActors(String label, Show show) {
-        System.out.println(label + ":") ;
+        System.out.println(label + " '" + show.getTitle() + "':") ;
         List<Actor> actors = show.getListOfActors( );
         if (actors.isEmpty()) {
             System.out.println("нет актёров");
@@ -66,15 +66,26 @@ public class Theatre {
     }
 
     private static void replaceActor(Show show, String surname, Actor newActor) {
-        if (show.hasActor(newActor)) {
+        if (show.checkExist(newActor)) {
             System.out.println("   актёр " + newActor + " уже участвует в спектакле");
             return;
         }
-        boolean success = show.replaceActorBySurname(surname, newActor);
-        if (success) {
+
+        if (!show.checkUnique(surname)) {
+            System.out.println("   в спектакле несколько актеров с фамилией '" + surname + "'");
+            return;
+        }
+
+        if (show.replaceActorBySurname(surname, newActor)) {
             System.out.println("   успешно");
         } else {
             System.out.println("   в спектакле '" + show.getTitle() + "' нет актёра '" + surname + "'");
         }
+    }
+
+    private static void printDirector(Show show) {
+        Director director = show.getDirector( );
+        System.out.println("-Директор cпектакля '" + show.getTitle() + "'");
+        System.out.println("   " + director);
     }
 }

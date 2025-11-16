@@ -12,8 +12,4 @@ public class Actor extends Person {
         return height;
     }
 
-    @Override
-    public String toString() {
-        return name + " " + surname;
-    }
 }
